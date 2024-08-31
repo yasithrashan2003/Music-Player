@@ -32,6 +32,17 @@ html {
   filter: blur(15px);
   -webkit-filter: blur(50px);
   transform: scale(1.1);
+  animation: zoomEffect 20s infinite linear;
+}
+
+@keyframes zoomEffect {
+  0%,
+  100% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 .container {
@@ -53,14 +64,23 @@ html {
   text-align: center;
   border-radius: 20px;
   z-index: 2;
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.music-player:hover {
+  transform: scale(1.05);
 }
 
 .music-player h1 {
   font-size: 22px;
+  color: #3c3d37;
 }
 
 .music-player p {
   font-size: 14px;
+  color: #3c3d37;
 }
 
 .song-img {
@@ -68,11 +88,11 @@ html {
   height: auto;
   max-width: 300px;
   border-radius: 15px;
+  transition: transform 0.3s ease-in-out;
 }
 
-#song-name,
-#artist-name {
-  color: #3c3d37;
+.music-player:hover .song-img {
+  transform: scale(1.1);
 }
 
 #progress {
@@ -97,7 +117,7 @@ html {
   align-items: center;
 }
 
-.controls div {
+.controls button {
   width: 50px;
   height: 50px;
   margin: 20px;
@@ -108,9 +128,15 @@ html {
   color: #3c3d37;
   cursor: pointer;
   transition: color 0.3s ease;
+  background: none;
+  border: none;
 }
 
-.controls div:hover {
+.controls button:focus {
+  outline: none;
+}
+
+.controls button:hover {
   color: #1e201e;
 }
 
@@ -155,6 +181,7 @@ html {
 #developer {
   margin-top: 20px;
   font-size: 14px;
+  color: #3c3d37;
 }
 
 @media (max-width: 600px) {
@@ -162,7 +189,7 @@ html {
     padding: 15px;
   }
 
-  .controls div {
+  .controls button {
     width: 40px;
     height: 40px;
     font-size: 28px;

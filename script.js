@@ -57,54 +57,51 @@ song.ontimeupdate = function () {
   );
 };
 
+progress.oninput = function () {
+  song.currentTime = progress.value;
+};
+
+volumeSlider.oninput = function () {
+  song.volume = volumeSlider.value;
+};
+
 function playPause() {
   if (song.paused) {
     song.play();
-    ctrlIcon.classList.add("fa-pause");
-    ctrlIcon.classList.remove("fa-play");
+    ctrlIcon.classList.replace("fa-play", "fa-pause");
   } else {
     song.pause();
-    ctrlIcon.classList.add("fa-play");
-    ctrlIcon.classList.remove("fa-pause");
+    ctrlIcon.classList.replace("fa-pause", "fa-play");
   }
 }
 
-progress.addEventListener("input", function () {
-  song.currentTime = progress.value;
-});
-
-volumeSlider.addEventListener("input", function () {
-  song.volume = volumeSlider.value;
-});
-
-function formatTime(seconds) {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60)
-    .toString()
-    .padStart(2, "0");
-  return `${mins}:${secs}`;
+function prevTrack() {
+  currentTrackIndex =
+    currentTrackIndex > 0 ? currentTrackIndex - 1 : tracks.length - 1;
+  loadTrack(currentTrackIndex);
 }
 
 function nextTrack() {
-  currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-  loadTrack();
+  currentTrackIndex =
+    currentTrackIndex < tracks.length - 1 ? currentTrackIndex + 1 : 0;
+  loadTrack(currentTrackIndex);
 }
 
-function prevTrack() {
-  currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
-  loadTrack();
-}
-
-function loadTrack() {
-  const track = tracks[currentTrackIndex];
+function loadTrack(index) {
+  const track = tracks[index];
   song.src = track.src;
   document.querySelector(".song-img").src = track.img;
-  document.getElementById("song-name").textContent = track.name;
-  document.getElementById("artist-name").textContent = track.artist;
+  document.querySelector("#song-name").textContent = track.name;
+  document.querySelector("#artist-name").textContent = track.artist;
   background.src = track.bgImg;
   song.play();
-  ctrlIcon.classList.add("fa-pause");
-  ctrlIcon.classList.remove("fa-play");
+  ctrlIcon.classList.replace("fa-play", "fa-pause");
 }
 
-window.onload = loadTrack;
+function formatTime(seconds) {
+  const min = Math.floor(seconds / 60);
+  const sec = Math.floor(seconds % 60);
+  return `${min}:${sec < 10 ? "0" + sec : sec}`;
+}
+
+song.addEventListener("ended", nextTrack);

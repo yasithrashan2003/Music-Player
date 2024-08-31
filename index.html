@@ -33,15 +33,15 @@
         </div>
 
         <div class="controls">
-          <div id="backward" onclick="prevTrack()">
+          <button id="backward" onclick="prevTrack()" aria-label="Previous Track">
             <i class="fa-solid fa-backward"></i>
-          </div>
-          <div onclick="playPause()">
+          </button>
+          <button onclick="playPause()" aria-label="Play/Pause">
             <i class="fa-solid fa-play" id="play"></i>
-          </div>
-          <div id="forward" onclick="nextTrack()">
+          </button>
+          <button id="forward" onclick="nextTrack()" aria-label="Next Track">
             <i class="fa-solid fa-forward"></i>
-          </div>
+          </button>
         </div>
 
         <div class="volume-control">
@@ -53,6 +53,7 @@
             step="0.1"
             value="1"
             id="volume"
+            aria-label="Volume"
           />
           <i class="fa-solid fa-volume-up"></i>
         </div>
